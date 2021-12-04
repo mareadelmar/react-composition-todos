@@ -1,6 +1,5 @@
 import React from "react";
-import { TodoContext } from "../TodoContext";
-import { TodoProvider } from "../TodoContext";
+import { useTodos } from "./useTodos";
 import { TodoCounter } from "../TodoCounter";
 import { TodoSearch } from "../TodoSearch";
 import { TodoList } from "../TodoList";
@@ -26,10 +25,11 @@ function App() {
 		totalTodos,
 		searchValue,
 		setSearchValue,
-	} = React.useContext(TodoContext);
+		addTodo,
+	} = useTodos();
 
 	return (
-		<TodoProvider>
+		<React.Fragment>
 			<TodoHeader>
 				<TodoCounter
 					totalTodos={totalTodos}
@@ -59,12 +59,12 @@ function App() {
 
 			{!!openModal && (
 				<Modal>
-					<TodoForm />
+					<TodoForm setOpenModal={setOpenModal} />
 				</Modal>
 			)}
 
-			<CreateTodoButton setOpenModal={setOpenModal} />
-		</TodoProvider>
+			<CreateTodoButton setOpenModal={setOpenModal} addTodo={addTodo} />
+		</React.Fragment>
 	);
 }
 
