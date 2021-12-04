@@ -1,14 +1,71 @@
-import React from 'react';
-import { TodoProvider } from '../TodoContext';
-import { AppUI } from './AppUI';
-
+import React from "react";
+import { TodoContext } from "../TodoContext";
+import { TodoProvider } from "../TodoContext";
+import { TodoCounter } from "../TodoCounter";
+import { TodoSearch } from "../TodoSearch";
+import { TodoList } from "../TodoList";
+import { TodoItem } from "../TodoItem";
+import { TodosError } from "../TodosError";
+import { TodosLoading } from "../TodosLoading";
+import { EmptyTodos } from "../EmptyTodos";
+import { TodoForm } from "../TodoForm";
+import { CreateTodoButton } from "../CreateTodoButton";
+import { Modal } from "../Modal";
+import { TodoHeader } from "../TodoHeader";
 
 function App() {
-  return (
-    <TodoProvider>
-      <AppUI />
-    </TodoProvider>
-  );
+	const {
+		error,
+		loading,
+		searchedTodos,
+		completeTodo,
+		deleteTodo,
+		openModal,
+		setOpenModal,
+		completedTodos,
+		totalTodos,
+		searchValue,
+		setSearchValue,
+	} = React.useContext(TodoContext);
+
+	return (
+		<TodoProvider>
+			<TodoHeader>
+				<TodoCounter
+					totalTodos={totalTodos}
+					completedTodos={completedTodos}
+				/>
+				<TodoSearch
+					searchValue={searchValue}
+					setSearchValue={setSearchValue}
+				/>
+			</TodoHeader>
+
+			<TodoList>
+				{error && <TodosError />}
+				{loading && <TodosLoading />}
+				{!loading && !searchedTodos.length && <EmptyTodos />}
+
+				{searchedTodos.map(todo => (
+					<TodoItem
+						key={todo.text}
+						text={todo.text}
+						completed={todo.completed}
+						onComplete={() => completeTodo(todo.text)}
+						onDelete={() => deleteTodo(todo.text)}
+					/>
+				))}
+			</TodoList>
+
+			{!!openModal && (
+				<Modal>
+					<TodoForm />
+				</Modal>
+			)}
+
+			<CreateTodoButton setOpenModal={setOpenModal} />
+		</TodoProvider>
+	);
 }
 
 export default App;
