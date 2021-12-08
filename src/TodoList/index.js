@@ -13,9 +13,10 @@ function TodoList(props) {
 				!props.searchedTodos.length &&
 				props.onEmptySearchResult(props.searchKeyword)}
 
-			{props.searchedTodos.map(
-				todo => props.render(todo) || props.children(todo)
-			)}
+			{!props.loading &&
+				props.searchedTodos.map(
+					todo => props.render(todo) || props.children(todo)
+				)}
 
 			<ul>{props.children}</ul>
 		</section>
