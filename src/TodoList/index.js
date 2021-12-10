@@ -14,6 +14,7 @@ function TodoList(props) {
 				props.onEmptySearchResult(props.searchKeyword)}
 
 			{!props.loading &&
+				!props.error &&
 				props.searchedTodos.map(
 					todo => props.render(todo) || props.children(todo)
 				)}
