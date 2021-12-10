@@ -11,7 +11,8 @@ import { TodoForm } from "../TodoForm";
 import { CreateTodoButton } from "../CreateTodoButton";
 import { Modal } from "../Modal";
 import { TodoHeader } from "../TodoHeader";
-import { StorageAlertWithListener } from "../StorageAlert";
+//import { StorageAlertWithListener } from "../StorageAlert";
+import { StorageAlert } from "../StorageAlert";
 
 function App() {
 	const {
@@ -85,7 +86,7 @@ function App() {
 			)}
 
 			<CreateTodoButton setOpenModal={setOpenModal} addTodo={addTodo} />
-			<StorageAlertWithListener sincronizeTodos={sincronizeTodos} />
+			<StorageAlert sincronizeTodos={sincronizeTodos} />
 		</React.Fragment>
 	);
 }
